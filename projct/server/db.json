@@ -1,0 +1,113 @@
+{
+  "users": [
+    {
+      "userName": "hoang2005",
+      "email": "hoang2005@gmail.com",
+      "password": "hoang2005",
+      "confirmPassword": "hoang2005",
+      "created_at": "11/07/2024 01:34:34",
+      "status": 0,
+      "id": 1
+    },
+    {
+      "userName": "phanh2005",
+      "email": "ppanh75@gamail.com",
+      "password": "phanh2005",
+      "confirmPassword": "phanh2005",
+      "created_at": "11/07/2024 01:44:09",
+      "status": 0,
+      "id": 2
+    },
+    {
+      "userName": "PHANH",
+      "email": "phanh@gmail.com",
+      "password": "12345",
+      "confirmPassword": "12345",
+      "created_at": "11/07/2024 09:03:13",
+      "status": 0,
+      "id": 3
+    },
+    {
+      "firstName": "Pham",
+      "lastName": "anh",
+      "email": "phanh1@gmail.com",
+      "password": "12345",
+      "confirmPassword": "12345",
+      "id": 4
+    }
+  ],
+  "product": [
+    {
+      "id": 1,
+      "nameProduct": "ĐẦN CỔ BẺ D01272",
+      "image": "https://product.hstatic.net/200000182297/product/12_f1a1d93163fb4583a8c43b722acb89b6_master.jpg",
+      "price": 1599000,
+      "stock": 100,
+      "status": "còn hàng",
+      "category": "ĐẦM"
+    },
+    {
+      "id": 2,
+      "nameProduct": "SƠ MI XANH THÊU HỌA TIẾT SM01552",
+      "image": "https://product.hstatic.net/200000182297/product/2_0c6b94b28b074fb884e764cc7872ae81_master.jpg",
+      "price": 779000,
+      "stock": 100,
+      "status": "còn hàng",
+      "category": "SƠ MI"
+    },
+    {
+      "id": 3,
+      "nameProduct": "ĐẦM MAXI HỌA TIẾT D03842",
+      "image": "https://product.hstatic.net/200000182297/product/12_108fa8435572469fa2a891d856485161_master.jpg",
+      "price": 1779000,
+      "stock": 100,
+      "status": "còn hàng",
+      "category": "ĐẦM"
+    },
+    {
+      "id": 4,
+      "nameProduct": "ĐẦM DENIM CỔ VUÔNG D01812",
+      "image": "https://product.hstatic.net/200000182297/product/15_83a1533b7e17478db5b0da59c256e318_master.jpg",
+      "price": 1259000,
+      "stock": 10,
+      "status": "còn hàng",
+      "category": "ĐẦM"
+    },
+    {
+      "id": 5,
+      "nameProduct": "SƠ MI HỌA TIẾT SM01552",
+      "image": "https://product.hstatic.net/200000182297/product/3_e0d0990edf964fba867237097090ec87_master.jpg",
+      "price": 699000,
+      "stock": 100,
+      "status": "còn hàng",
+      "category": "SƠ MI"
+    },
+    {
+      "id": 6,
+      "nameProduct": "ĐẦM SUÔNG ĐEN ĐÍNH CƯỜM D03812",
+      "image": "https://product.hstatic.net/200000182297/product/4_9ffc94aee3564b71b410359272051438_master.jpg",
+      "price": 899000,
+      "stock": 100,
+      "status": "còn hàng",
+      "category": "ĐẦM"
+    },
+    {
+      "id": 7,
+      "nameProduct": "CHÂN VÁY ĐUÔI CÁ",
+      "image": "https://product.hstatic.net/200000182297/product/21_00d3dd1edc024168a261273a5e92685e_master.jpg",
+      "price": 789000,
+      "stock": 100,
+      "status": "còn hàng",
+      "category": "CHÂN VÁY"
+    },
+    {
+      "id": 8,
+      "nameProduct": "SƠ MI CROP TOP SM00952",
+      "image": "https://product.hstatic.net/200000182297/product/sm009521212452020201p799dt_q009621702452020201p699dt__9__69ec1c8233d1462db3d1ec0292a3cf44_master.jpg",
+      "price": 700000,
+      "stock": 100,
+      "status": "còn hàng",
+      "category": "SƠ MI"
+    }
+  ]
+}
