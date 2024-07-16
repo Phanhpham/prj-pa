@@ -121,7 +121,7 @@ const LoginAdmin = () => {
   });
 
   const adminAccount = {
-    email: "phanh@gmail.com",
+    email: "",
     password: "123456",
   };
 

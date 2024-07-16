@@ -10,3 +10,8 @@ export interface Users{
     email:string,
     password:string
 }
+
+export interface Logins{
+    email: string,
+    password: string,
+}

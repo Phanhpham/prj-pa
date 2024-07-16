@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Menu from "../Menu";
 import "../scss/adminHome.scss";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteProduct,
+  getAllProduct,
+  searchProduct,
+} from "../../services/product.service";
+import { Product } from "../../interface/admin";
 
 function AdminUser() {
+  const productState = useSelector((state: any) => state.products.product);
+  const dispatch = useDispatch();
+  console.log(productState);
+  useEffect(() => {
+    dispatch(getAllProduct());
+  }, []);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -19,8 +32,22 @@ function AdminUser() {
       navigate("");
     }
   };
+
+  const handleDelete = async (id: number) => {
+    const confirmDelete = confirm("Bạn có muốn xóa sản phẩm này không?");
+    if (confirmDelete) {
+      await dispatch(deleteProduct(id));
+      await dispatch(getAllProduct());
+    }
+  };
+
+  const [search, setSearch] = useState<string>("");
+  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    await dispatch(searchProduct(search));
+  };
   return (
-    <div style={{display:"flex"}}>
+    <div style={{ display: "flex" }}>
       <div className="sidebar-admin">
         <div className="logo">
           <h2>ADMIN</h2> <br />
@@ -118,7 +145,12 @@ function AdminUser() {
           <div className="user-info">
             <div className="search-box">
               <i className="fa-solid fa-search"></i>
-              <input type="text" placeholder="Tìm kiếm ở đây" />
+              <input
+                type="text"
+                placeholder="Tìm kiếm ở đây"
+                value={search}
+                onChange={handleSearch}
+              />
             </div>
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV1mHHzOnO1BG__4Ai6GlaZpfRztsrQM1fols7meZqlY6arSu0mvtlHSArvUHZRquwnA0&usqp=CAU"
@@ -143,21 +175,28 @@ function AdminUser() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Đầm hoa sen</td>
-                  <td><img src ="https://product.hstatic.net/200000182297/product/12_d1100c03ecdd4dd49a03ed139aa67b93_master.jpg"></img></td>
-                  <td>1,599,000đ</td>
-                  <td>100</td>
-                  <td>Còn hàng</td>
-                  
-                  <td>
-                    <button className="btn btn-primary">sửa</button>
-                    <button className="btn btn-danger">xoá</button>
-                  </td>
-                </tr>
-              
-                
+                {productState.map((product: Product, index: number) => (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{product.nameProduct}</td>
+                    <td>
+                      <img src={product.image}></img>
+                    </td>
+                    <td>{product.price} đ</td>
+                    <td>{product.stock}</td>
+                    <td>{product.status}</td>
+
+                    <td>
+                      <button className="btn btn-primary">sửa</button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => handleDelete(product.id)}
+                      >
+                        xoá
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

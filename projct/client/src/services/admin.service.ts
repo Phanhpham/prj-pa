@@ -30,3 +30,13 @@ export const searchUser: any = createAsyncThunk(
         return response.data
     }
 )
+
+// API cập nhật trạng thái user
+export const updateStatus: any = createAsyncThunk(
+    "users/updateUser",
+    async (data: any) => {
+        const url = import.meta.env.VITE_BASE_URL;
+        const response = await axios.patch(`${url}/users/${data.id}`, data);
+        return response.data
+    }
+)

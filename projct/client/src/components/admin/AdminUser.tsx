@@ -9,7 +9,12 @@ import Modal from "react-bootstrap/Modal";
 import { User } from "../../interface/user";
 import { AddUser, Users } from "../../interface/admin";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser, getAllUser, searchUser } from "../../services/admin.service";
+import {
+  addUser,
+  getAllUser,
+  searchUser,
+  updateStatus,
+} from "../../services/admin.service";
 import { format } from "date-fns";
 
 function AdminUser() {
@@ -21,7 +26,6 @@ function AdminUser() {
   }, []);
   const [show, setShow] = useState(false);
   const [search, setSearch] = useState<string>("");
-  const [selectedUser, setSelectedUser] = useState<Users | null>(null);
   const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState<AddUser>({
     userName: "",
@@ -36,6 +40,11 @@ function AdminUser() {
     password: "",
     confirmPassword: "",
   });
+
+  const [showBlockModal, setShowBlockModal] = useState(false);
+  const [showUnblockModal, setShowUnblockModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [selectedUser, setSelectedUser] = useState<Users | null>(null);
 
   const [shows, setShows] = useState(false);
   const handleClose = () => setShow(false);
@@ -114,6 +123,45 @@ function AdminUser() {
       ...inputValue,
       [name]: value,
     });
+  };
+
+  const handleShowBlockModal = (userId: number) => {
+    setSelectedUserId(userId);
+    setShowBlockModal(true);
+  };
+
+  const handleHideBlockModal = () => {
+    setSelectedUserId(null);
+    setShowBlockModal(false);
+  };
+
+  const handleShowUnblockModal = (userId: number) => {
+    setSelectedUserId(userId);
+    setShowUnblockModal(true);
+  };
+
+  const handleHideUnblockModal = () => {
+    setSelectedUserId(null);
+    setShowUnblockModal(false);
+  };
+
+  // Hàm chặn và bỏ chặn
+  const handleBlockUser = (e: any) => {
+    e.preventDefault();
+    if (selectedUserId !== null) {
+      dispatch(updateStatus({ id: selectedUserId, status: 1 }));
+      dispatch(getAllUser()); // Refresh the user list
+      handleHideBlockModal();
+    }
+  };
+
+  const handleUnblockUser = (e: any) => {
+    e.preventDefault();
+    if (selectedUserId !== null) {
+      dispatch(updateStatus({ id: selectedUserId, status: 0 }));
+      dispatch(getAllUser()); // Refresh the user list
+      handleHideUnblockModal();
+    }
   };
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -292,7 +340,7 @@ function AdminUser() {
               </thead>
               <tbody>
                 {userState.map((user: Users, index: number) => (
-                  <tr>
+                  <tr style={{ opacity: user.status === 1 ? 0.5 : 1 }}>
                     <td>{index + 1}</td>
                     <td>{user.userName}</td>
                     <td>{user.email}</td>
@@ -305,7 +353,21 @@ function AdminUser() {
                       >
                         Xem
                       </Button>
-                      <button className="btn btn-danger">Chặn</button>
+                      {user.status === 1 ? (
+                        <Button
+                          variant="success"
+                          onClick={() => handleShowUnblockModal(user.id)}
+                        >
+                          Bỏ chặn
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="danger"
+                          onClick={() => handleShowBlockModal(user.id)}
+                        >
+                          Chặn
+                        </Button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -341,6 +403,41 @@ function AdminUser() {
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleCloses}>
                   Đóng
+                </Button>
+              </Modal.Footer>
+            </Modal>
+
+            <Modal show={showBlockModal} onHide={handleHideBlockModal}>
+              <Modal.Header closeButton>
+                <Modal.Title>Xác nhận chặn tài khoản</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Bạn có chắc chắn muốn chặn tài khoản {selectedUser?.userName}?
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleHideBlockModal}>
+                  Hủy
+                </Button>
+                <Button variant="danger" onClick={handleBlockUser}>
+                  Chặn
+                </Button>
+              </Modal.Footer>
+            </Modal>
+
+            <Modal show={showUnblockModal} onHide={handleHideUnblockModal}>
+              <Modal.Header closeButton>
+                <Modal.Title>Xác nhận bỏ chặn tài khoản</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Bạn có chắc chắn muốn bỏ chặn tài khoản {selectedUser?.userName}
+                ?
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleHideUnblockModal}>
+                  Hủy
+                </Button>
+                <Button variant="success" onClick={handleUnblockUser}>
+                  Bỏ chặn
                 </Button>
               </Modal.Footer>
             </Modal>

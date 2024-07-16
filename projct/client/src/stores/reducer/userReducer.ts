@@ -1,7 +1,7 @@
-import { addUser, getAllUser, searchUser } from '../../services/admin.service' ;
-import { User } from '../../interface/user'
-import { createSlice } from "@reduxjs/toolkit"
-const userState: User[] = [];
+import { addUser, getAllUser, searchUser, updateStatus } from '../../services/admin.service' ;
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { Users } from '../../interface/admin';
+const userState: Users[] = [];
 
 const userReducer = createSlice({
     name: "users",
@@ -19,6 +19,12 @@ const userReducer = createSlice({
         })
         .addCase(searchUser.fulfilled, (state, action) => {
             state.user = action.payload;
+        })
+        .addCase(updateStatus.fulfilled, (state, action: PayloadAction<{ id: number, status: number }>) => {
+            const userIndex = state.user.findIndex((user: Users) => user.id === action.payload.id);
+            if (userIndex !== -1) {
+                state.user[userIndex].status = action.payload.status;
+            }
         })
     }
 })

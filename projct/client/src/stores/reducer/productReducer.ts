@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Product } from "../../interface/admin";
-import { getAllProduct } from "../../services/product.service";
+import { deleteProduct, getAllProduct, searchProduct } from "../../services/product.service";
 
 const productState: Product[] = [];
 
@@ -13,6 +13,12 @@ const productReducer = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getAllProduct.fulfilled, (state, action) => {
             state.product = action.payload;
+        })
+        .addCase(deleteProduct.fulfilled, (state, action) => {
+            state.product = state.product.filter((item: Product) => item.id !== action.payload)
+        })
+        .addCase(searchProduct.fulfilled, (state, action) => {
+            state.product = action.payload
         })
     }
 })

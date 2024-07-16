@@ -3,10 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllProduct } from "../../services/product.service";
 import { Product } from "../../interface/admin";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/home.css";
 import BannerHome from "./BannerHome";
 import BlogHome from "./BlogHome";
+
+// Laay du lieu account tu local
+// const account = JSON.parse(localStorage.getItem("account") || "[]");
+// const navigate = useNavigate();
 
 const formatPrice = (price: number): string => {
   return new Intl.NumberFormat("vi-VN", {
@@ -20,6 +24,14 @@ interface RootState {
     product: Product[];
   };
 }
+
+// const handleClick = () => {
+//   const confirmLogout = confirm("Ban co chac chan dang xuat khong?");
+//   if (confirmLogout) {
+//     navigate("/login");
+//     localStorage.removeItem("account");
+//   }
+// };
 
 export default function Home() {
   const productState = useSelector(
@@ -71,7 +83,7 @@ export default function Home() {
       setFavorites(updatedFavorites);
     }
   };
-
+  // danh muc sp
   const categories: string[] = [
     "Tất cả sản phẩm",
     ...new Set(productState.map((product: Product) => product.category)),
@@ -176,9 +188,23 @@ export default function Home() {
             </div>
             <div className="account">
               <i className="fa-solid fa-user"></i>
-              <Link to={"/register"} style={{ color: "black" }}>
+              <Link to={"/login"} style={{ color: "black" }}>
                 Tài khoản
               </Link>
+              {/* {account ? (
+                <>
+                  <a href="" onClick={handleClick}>
+                    {account.userName}
+                  </a>
+                </>
+              ) : (
+                <>
+                  <i className="fa-solid fa-user"></i>
+                  <Link to={"/register"} style={{ color: "black" }}>
+                    Tài khoản
+                  </Link>
+                </>
+              )} */}
             </div>
             <div className="cart">
               <i className="fa-solid fa-cart-shopping"></i>
